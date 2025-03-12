@@ -1,8 +1,18 @@
-# Usa una imagen base de nginx
-FROM nginx:alpine
+# Usa una imagen base oficial de Node.js
+FROM node:18  
 
-# Copia los archivos de tu proyecto al directorio de nginx
-COPY . /usr/share/nginx/html
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app  
 
-# Exponer el puerto 80
-EXPOSE 80
+# Copia los archivos necesarios y instala dependencias
+COPY package.json ./
+RUN npm install  
+
+# Copia todo el código al contenedor
+COPY . .  
+
+# Expone el puerto en el que corre la app
+EXPOSE 3000  
+
+# Comando para iniciar la aplicación
+CMD ["npm", "start"]
